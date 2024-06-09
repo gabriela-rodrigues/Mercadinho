@@ -1,0 +1,6 @@
+com\example\Mercadinho\service\ProductService.class
+com\example\Mercadinho\repository\ProductRepository.class
+com\example\Mercadinho\model\Product.class
+com\example\Mercadinho\controller\ProductController.class
+com\example\Mercadinho\ServletInitializer.class
+com\example\Mercadinho\MercadinhoApplication.class
