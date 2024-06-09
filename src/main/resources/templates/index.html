@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mercadinho</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        function editPrice(productId, currentPrice) {
+            const newPrice = prompt("Digite o novo preço:", currentPrice);
+            if (newPrice !== null && newPrice !== "") {
+                document.getElementById("productId").value = productId;
+                document.getElementById("newPrice").value = newPrice;
+                document.getElementById("updatePriceForm").submit();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Mercadinho</h1>
+    <div class="cards">
+        <div th:each="product : ${products}" class="card">
+            <h2 th:text="${product.name}">Produto Nome</h2>
+            <p th:text="${product.description}">Descrição do Produto</p>
+            <p>
+                Preço: <span th:text="${product.price}">Preço</span>
+                <span style="cursor: pointer; color: blue;" 
+                      th:data-id="${product.id}" 
+                      th:data-price="${product.price}"
+                      onclick="editPrice(this.getAttribute('data-id'), this.getAttribute('data-price'))">
+                      ✏️
+                </span>
+            </p>
+            <form th:action="@{/add-to-cart}" method="post">
+                <input type="hidden" th:value="${product.id}" name="productId">
+                <button type="submit">Adicionar ao Carrinho</button>
+            </form>
+        </div>
+    </div>
+
+    <h2>Carrinho de Compras</h2>
+    <div class="cards">
+        <div th:each="product : ${cart}" class="card">
+            <h2 th:text="${product.name}">Produto Nome</h2>
+            <p th:text="${product.description}">Descrição do Produto</p>
+            <p>Preço: <span th:text="${product.price}">Preço</span></p>
+            <form th:action="@{/remove-from-cart}" method="post">
+                <input type="hidden" th:value="${product.id}" name="productId">
+                <button type="submit">Remover do Carrinho</button>
+            </form>
+        </div>
+    </div>
+
+    <form id="updatePriceForm" th:action="@{/update-price}" method="post" style="display:none;">
+        <input type="hidden" id="productId" name="productId">
+        <input type="hidden" id="newPrice" name="newPrice">
+    </form>
+
+    <div th:if="${message}">
+        <p th:text="${message}">Mensagem</p>
+    </div>
+</body>
+</html>
