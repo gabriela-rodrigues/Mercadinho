@@ -10,6 +10,6 @@ FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build Mercadinho\target\mercadinho-1.0.0.jar  app.jar
+COPY --from=build target\mercadinho-1.0.0.jar  app.jar
 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
